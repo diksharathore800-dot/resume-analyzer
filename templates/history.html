@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Analysis History</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            padding: 40px 20px;
+        }
+
+
+        /* ==============================
+           Main Container
+        ============================== */
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+
+        /* ==============================
+           Header
+        ============================== */
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+
+        /* ==============================
+           Main Card
+        ============================== */
+
+        .card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.15);
+
+            overflow-x: auto;
+        }
+
+
+        /* ==============================
+           Table
+        ============================== */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+
+        th {
+            background: #667eea;
+            color: white;
+
+            padding: 15px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+
+        td {
+            padding: 15px;
+
+            text-align: center;
+
+            border-bottom: 1px solid #eee;
+
+            color: #444;
+
+            font-size: 14px;
+        }
+
+
+        tr:hover td {
+            background: #f7f7fb;
+        }
+
+
+        /* ==============================
+           Resume Link
+        ============================== */
+
+        .resume-link {
+            color: #667eea;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .resume-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* ==============================
+           Score
+        ============================== */
+
+        .score {
+            font-weight: bold;
+
+            color: #667eea;
+        }
+
+
+        .overall-score {
+            font-size: 16px;
+
+            font-weight: bold;
+
+            color: #4caf50;
+        }
+
+
+        /* ==============================
+           View Button
+        ============================== */
+
+        .view-button {
+            display: inline-block;
+
+            padding: 9px 14px;
+
+            background: #667eea;
+
+            color: white;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .view-button:hover {
+            background: #5568d8;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* ==============================
+           Empty State
+        ============================== */
+
+        .empty {
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #777;
+        }
+
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .empty h2 {
+            margin-bottom: 8px;
+
+            color: #444;
+        }
+
+
+        /* ==============================
+           Bottom Buttons
+        ============================== */
+
+        .buttons {
+            display: flex;
+
+            gap: 15px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .primary {
+            background: #667eea;
+
+            color: white;
+        }
+
+
+        .secondary {
+            background: white;
+
+            color: #667eea;
+
+            border: 2px solid #667eea;
+        }
+
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* ==============================
+           Responsive
+        ============================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 20px 10px;
+            }
+
+
+            .card {
+                padding: 15px;
+            }
+
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==============================
+         Header
+    ============================== -->
+
+    <div class="header">
+
+        <h1>
+            📊 Analysis History
+        </h1>
+
+        <p>
+            View your previously analyzed resumes and their scores.
+        </p>
+
+    </div>
+
+
+    <!-- ==============================
+         History Card
+    ============================== -->
+
+    <div class="card">
+
+
+        {% if analyses %}
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Resume
+                    </th>
+
+                    <th>
+                        Resume Score
+                    </th>
+
+                    <th>
+                        Keyword Match
+                    </th>
+
+                    <th>
+                        NLP Score
+                    </th>
+
+                    <th>
+                        Overall Match
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for analysis in analyses %}
+
+
+                <tr>
+
+
+                    <!-- ID -->
+
+                    <td>
+                        {{ analysis[0] }}
+                    </td>
+
+
+                    <!-- Resume -->
+
+                    <td>
+
+                        <a
+                            href="/analysis/{{ analysis[0] }}"
+                            class="resume-link"
+                        >
+                            {{ analysis[1] }}
+                        </a>
+
+                    </td>
+
+
+                    <!-- Resume Score -->
+
+                    <td class="score">
+
+                        {{ analysis[2] }}/100
+
+                    </td>
+
+
+                    <!-- Keyword Match -->
+
+                    <td>
+
+                        {{ analysis[3] }}%
+
+                    </td>
+
+
+                    <!-- NLP Score -->
+
+                    <td>
+
+                        {{ analysis[4] }}%
+
+                    </td>
+
+
+                    <!-- Overall Match -->
+
+                    <td class="overall-score">
+
+                        {{ analysis[5] }}%
+
+                    </td>
+
+
+                    <!-- Date -->
+
+                    <td>
+
+                        {{ analysis[6] }}
+
+                    </td>
+
+
+                    <!-- Action -->
+
+                    <td>
+
+                        <a
+                            href="/analysis/{{ analysis[0] }}"
+                            class="view-button"
+                        >
+                            View Details
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+
+        <!-- Empty State -->
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                📄
+            </div>
+
+            <h2>
+                No Analyses Yet
+            </h2>
+
+            <p>
+                Upload a resume and analyze it to see your
+                results here.
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+        <!-- ==============================
+             Navigation
+        ============================== -->
+
+        <div class="buttons">
+
+            <a
+                href="/"
+                class="button primary"
+            >
+                🔍 Analyze Another Resume
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

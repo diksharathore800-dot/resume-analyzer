@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Resume Analysis Results</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            min-height: 100vh;
+
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* ==============================
+           CARD
+        ============================== */
+
+        .card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* ==============================
+           SCORE SECTION
+        ============================== */
+
+        .score-item {
+            margin-bottom: 25px;
+        }
+
+        .score-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .score-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 8px;
+
+            color: #444;
+
+            font-size: 15px;
+        }
+
+        .score-header strong {
+            color: #667eea;
+
+            font-size: 16px;
+        }
+
+        .progress {
+            width: 100%;
+
+            height: 12px;
+
+            background: #e9e9ef;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+
+            width: 0%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            transition: width 0.8s ease;
+        }
+
+        .overall-progress {
+            height: 18px;
+        }
+
+        .overall-progress .progress-bar {
+            background:
+                linear-gradient(
+                    90deg,
+                    #4caf50,
+                    #667eea
+                );
+        }
+
+        /* ==============================
+           STATUS
+        ============================== */
+
+        .score-status {
+            text-align: center;
+
+            margin-top: 22px;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: #f7f7fb;
+
+            color: #444;
+
+            font-weight: bold;
+        }
+
+        /* ==============================
+           INFORMATION
+        ============================== */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .info-box {
+            padding: 18px;
+
+            background: #f7f7fb;
+
+            border-radius: 12px;
+        }
+
+        .info-box strong {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #666;
+
+            font-size: 13px;
+        }
+
+        .info-box span {
+            color: #222;
+
+            font-weight: bold;
+
+            word-break: break-word;
+        }
+
+        /* ==============================
+           SKILLS
+        ============================== */
+
+        .skills {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+        .skill {
+            padding: 9px 15px;
+
+            border-radius: 20px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .resume-skill {
+            background: #e8eaf6;
+
+            color: #3949ab;
+        }
+
+        .required {
+            background: #fff3cd;
+
+            color: #856404;
+        }
+
+        .matched {
+            background: #d4edda;
+
+            color: #155724;
+        }
+
+        .missing {
+            background: #f8d7da;
+
+            color: #721c24;
+        }
+
+        /* ==============================
+           SUGGESTIONS
+        ============================== */
+
+        .suggestions {
+            list-style: none;
+        }
+
+        .suggestions li {
+            background: #f7f7fb;
+
+            margin-bottom: 10px;
+
+            padding: 14px 16px;
+
+            border-left:
+                4px solid #667eea;
+
+            border-radius: 8px;
+
+            color: #444;
+
+            line-height: 1.5;
+        }
+
+        .suggestions li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        .buttons {
+            display: flex;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .primary {
+            background: #667eea;
+
+            color: white;
+        }
+
+        .secondary {
+            background: white;
+
+            color: #667eea;
+
+            border:
+                2px solid #667eea;
+        }
+
+        .dashboard-button {
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            color: white;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 15px
+                rgba(0, 0, 0, 0.12);
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 800px) {
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 20px 12px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
+    <div class="header">
+
+        <h1>
+            📊 Resume Analysis
+        </h1>
+
+        <p>
+            Here's how your resume matches the selected job.
+        </p>
+
+    </div>
+
+
+    <!-- ==============================
+         SCORE DASHBOARD
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            🎯 Job Match Analysis
+        </h2>
+
+
+        <!-- Resume Score -->
+
+        <div class="score-item">
+
+            <div class="score-header">
+
+                <span>
+                    Resume Score
+                </span>
+
+                <strong>
+                    {{ resume_score }}/100
+                </strong>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="resumeScoreBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Keyword Match -->
+
+        <div class="score-item">
+
+            <div class="score-header">
+
+                <span>
+                    🔑 Keyword Match
+                </span>
+
+                <strong>
+                    {{ match_score }}%
+                </strong>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="matchScoreBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NLP Similarity -->
+
+        <div class="score-item">
+
+            <div class="score-header">
+
+                <span>
+                    🧠 NLP Similarity
+                </span>
+
+                <strong>
+                    {{ nlp_score }}%
+                </strong>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="nlpScoreBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Overall Match -->
+
+        <div class="score-item">
+
+            <div class="score-header">
+
+                <span>
+                    ⭐ Overall Job Match
+                </span>
+
+                <strong>
+                    {{ combined_score }}%
+                </strong>
+
+            </div>
+
+            <div class="progress overall-progress">
+
+                <div
+                    class="progress-bar"
+                    id="combinedScoreBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Match Status -->
+
+        {% if combined_score >= 80 %}
+
+        <div class="score-status">
+
+            🟢 Excellent Match!
+
+            <br>
+
+            Your resume is highly relevant to this job.
+
+        </div>
+
+
+        {% elif combined_score >= 60 %}
+
+        <div class="score-status">
+
+            🟡 Good Match!
+
+            <br>
+
+            Your resume has a good alignment with this job.
+
+        </div>
+
+
+        {% elif combined_score >= 40 %}
+
+        <div class="score-status">
+
+            🟠 Moderate Match.
+
+            <br>
+
+            Consider improving your resume for this role.
+
+        </div>
+
+
+        {% else %}
+
+        <div class="score-status">
+
+            🔴 Low Match.
+
+            <br>
+
+            Your resume needs more relevant skills
+            and keywords.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ==============================
+         CANDIDATE INFORMATION
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            👤 Candidate Information
+        </h2>
+
+        <div class="info-grid">
+
+
+            <div class="info-box">
+
+                <strong>
+                    RESUME
+                </strong>
+
+                <span>
+                    {{ filename }}
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>
+                    EMAIL
+                </strong>
+
+                <span>
+                    {{ email }}
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>
+                    PHONE
+                </strong>
+
+                <span>
+                    {{ phone }}
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         RESUME SKILLS
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            💻 Skills Found in Resume
+        </h2>
+
+        <div class="skills">
+
+            {% if resume_skills %}
+
+                {% for skill in resume_skills %}
+
+                    <span class="skill resume-skill">
+                        {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    No skills detected.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         REQUIRED SKILLS
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            🎯 Skills Required by Job
+        </h2>
+
+        <div class="skills">
+
+            {% if required_skills %}
+
+                {% for skill in required_skills %}
+
+                    <span class="skill required">
+                        {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    No specific skills detected.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         MATCHED SKILLS
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            ✅ Matched Skills
+        </h2>
+
+        <div class="skills">
+
+            {% if matched_skills %}
+
+                {% for skill in matched_skills %}
+
+                    <span class="skill matched">
+                        ✓ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    No matching skills found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         MISSING SKILLS
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            ⚠️ Missing Skills
+        </h2>
+
+        <div class="skills">
+
+            {% if missing_skills %}
+
+                {% for skill in missing_skills %}
+
+                    <span class="skill missing">
+                        ✕ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    No missing skills! 🎉
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         SUGGESTIONS
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            💡 Suggestions to Improve
+        </h2>
+
+        <ul class="suggestions">
+
+            {% if suggestions %}
+
+                {% for suggestion in suggestions %}
+
+                    <li>
+                        {{ suggestion }}
+                    </li>
+
+                {% endfor %}
+
+            {% else %}
+
+                <li>
+                    Your resume looks good!
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+
+    <!-- ==============================
+         NAVIGATION
+    ============================== -->
+
+    <div class="card">
+
+        <div class="buttons">
+
+            <a
+                href="/"
+                class="button primary"
+            >
+                🔄 Analyze Another Resume
+            </a>
+
+
+            <a
+                href="/history"
+                class="button secondary"
+            >
+                📊 View Analysis History
+            </a>
+
+
+            <a
+                href="/dashboard"
+                class="button dashboard-button"
+            >
+                📈 Open Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ==============================
+     PROGRESS BAR JAVASCRIPT
+============================== -->
+
+<script>
+
+    document.getElementById("resumeScoreBar").style.width =
+        "{{ resume_score }}%";
+
+
+    document.getElementById("matchScoreBar").style.width =
+        "{{ match_score }}%";
+
+
+    document.getElementById("nlpScoreBar").style.width =
+        "{{ nlp_score }}%";
+
+
+    document.getElementById("combinedScoreBar").style.width =
+        "{{ combined_score }}%";
+
+</script>
+
+
+</body>
+
+</html>

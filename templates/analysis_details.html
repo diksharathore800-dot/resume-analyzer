@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Analysis Details</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            padding: 40px 20px;
+        }
+
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+
+        /* ==============================
+           Header
+        ============================== */
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+
+        /* ==============================
+           Card
+        ============================== */
+
+        .card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+
+        .card h2 {
+            color: #333;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* ==============================
+           Candidate Information
+        ============================== */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .info-box {
+            background: #f7f7fb;
+
+            padding: 20px;
+
+            border-radius: 12px;
+        }
+
+
+        .info-box strong {
+            display: block;
+
+            color: #666;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .info-box span {
+            color: #222;
+
+            font-weight: bold;
+
+            word-break: break-word;
+        }
+
+
+        /* ==============================
+           Scores
+        ============================== */
+
+        .score-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .score-box {
+            text-align: center;
+
+            background: #f7f7fb;
+
+            padding: 25px 15px;
+
+            border-radius: 14px;
+        }
+
+
+        .score-box h3 {
+            font-size: 14px;
+
+            color: #666;
+
+            margin-bottom: 12px;
+        }
+
+
+        .score-value {
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #667eea;
+        }
+
+
+        /* ==============================
+           Skills
+        ============================== */
+
+        .skills {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+
+        .skill {
+            padding: 9px 15px;
+
+            border-radius: 20px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        .matched {
+            background: #d4edda;
+
+            color: #155724;
+        }
+
+
+        .missing {
+            background: #f8d7da;
+
+            color: #721c24;
+        }
+
+
+        /* ==============================
+           Suggestions
+        ============================== */
+
+        .suggestions {
+            list-style: none;
+        }
+
+
+        .suggestions li {
+            background: #f7f7fb;
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            border-left: 4px solid #667eea;
+
+            border-radius: 8px;
+
+            line-height: 1.5;
+
+            color: #444;
+        }
+
+
+        /* ==============================
+           Buttons
+        ============================== */
+
+        .buttons {
+            display: flex;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .primary {
+            background: #667eea;
+
+            color: white;
+        }
+
+
+        .secondary {
+            background: white;
+
+            color: #667eea;
+
+            border: 2px solid #667eea;
+        }
+
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* ==============================
+           Responsive
+        ============================== */
+
+        @media (max-width: 800px) {
+
+            .score-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 20px 10px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==============================
+         Header
+    ============================== -->
+
+    <div class="header">
+
+        <h1>
+            📊 Analysis Details
+        </h1>
+
+        <p>
+            Complete analysis of your previously uploaded resume
+        </p>
+
+    </div>
+
+
+    <!-- ==============================
+         Candidate Information
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            👤 Candidate Information
+        </h2>
+
+
+        <div class="info-grid">
+
+
+            <div class="info-box">
+
+                <strong>
+                    RESUME
+                </strong>
+
+                <span>
+                    {{ analysis[1] }}
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>
+                    EMAIL
+                </strong>
+
+                <span>
+                    {{ analysis[2] }}
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>
+                    PHONE
+                </strong>
+
+                <span>
+                    {{ analysis[3] }}
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         Scores
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            🎯 Performance Scores
+        </h2>
+
+
+        <div class="score-grid">
+
+
+            <div class="score-box">
+
+                <h3>
+                    Resume Score
+                </h3>
+
+                <div class="score-value">
+                    {{ analysis[4] }}/100
+                </div>
+
+            </div>
+
+
+            <div class="score-box">
+
+                <h3>
+                    Keyword Match
+                </h3>
+
+                <div class="score-value">
+                    {{ analysis[5] }}%
+                </div>
+
+            </div>
+
+
+            <div class="score-box">
+
+                <h3>
+                    NLP Similarity
+                </h3>
+
+                <div class="score-value">
+                    {{ analysis[6] }}%
+                </div>
+
+            </div>
+
+
+            <div class="score-box">
+
+                <h3>
+                    Overall Match
+                </h3>
+
+                <div class="score-value">
+                    {{ analysis[7] }}%
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         Matched Skills
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            ✅ Matched Skills
+        </h2>
+
+
+        <div class="skills">
+
+
+            {% if analysis[8] %}
+
+
+                {% for skill in analysis[8].split(", ") %}
+
+
+                    <span class="skill matched">
+
+                        ✓ {{ skill }}
+
+                    </span>
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <p>
+                    No matched skills found.
+                </p>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         Missing Skills
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            ⚠️ Missing Skills
+        </h2>
+
+
+        <div class="skills">
+
+
+            {% if analysis[9] %}
+
+
+                {% for skill in analysis[9].split(", ") %}
+
+
+                    <span class="skill missing">
+
+                        ✕ {{ skill }}
+
+                    </span>
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <p>
+                    No missing skills. Great job! 🎉
+                </p>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         Analysis Date
+    ============================== -->
+
+    <div class="card">
+
+        <h2>
+            🕒 Analysis Information
+        </h2>
+
+        <p style="color: #555;">
+
+            This resume was analyzed on:
+
+            <strong>
+                {{ analysis[10] }}
+            </strong>
+
+        </p>
+
+    </div>
+
+
+    <!-- ==============================
+         Navigation
+    ============================== -->
+
+    <div class="card">
+
+        <div class="buttons">
+
+
+            <a
+                href="/"
+                class="button primary"
+            >
+                🔍 Analyze Another Resume
+            </a>
+
+
+            <a
+                href="/history"
+                class="button secondary"
+            >
+                ← Back to History
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

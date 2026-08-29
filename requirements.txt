@@ -1,0 +1,5 @@
+Flask
+pypdf
+psycopg2-binary
+scikit-learn
+gunicorn

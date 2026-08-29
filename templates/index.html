@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Resume Analyzer</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+
+        /* =================================
+           Main Container
+        ================================= */
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+
+        /* =================================
+           Header
+        ================================= */
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+
+        .header p {
+            font-size: 17px;
+            line-height: 1.6;
+
+            max-width: 650px;
+
+            margin: auto;
+
+            opacity: 0.95;
+        }
+
+
+        /* =================================
+           Main Card
+        ================================= */
+
+        .card {
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* =================================
+           Section
+        ================================= */
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+
+        .section label {
+            display: block;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+
+            color: #333;
+        }
+
+
+        /* =================================
+           File Upload
+        ================================= */
+
+        .file-box {
+            border: 2px dashed #667eea;
+
+            padding: 30px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            background: #f8f9ff;
+
+            transition: 0.3s;
+        }
+
+
+        .file-box:hover {
+            background: #f0f2ff;
+        }
+
+
+        .file-box input {
+            width: 100%;
+
+            padding: 10px;
+
+            cursor: pointer;
+        }
+
+
+        .file-info {
+            margin-top: 10px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* =================================
+           Job Description
+        ================================= */
+
+        textarea {
+            width: 100%;
+
+            min-height: 220px;
+
+            resize: vertical;
+
+            padding: 15px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+
+        textarea:focus {
+            border-color: #667eea;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    102,
+                    126,
+                    234,
+                    0.15
+                );
+        }
+
+
+        /* =================================
+           Analyze Button
+        ================================= */
+
+        .analyze-button {
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .analyze-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(
+                    102,
+                    126,
+                    234,
+                    0.35
+                );
+        }
+
+
+        /* =================================
+           Navigation Buttons
+        ================================= */
+
+        .nav-button {
+            display: block;
+
+            width: 100%;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            border: 2px solid #667eea;
+
+            color: #667eea;
+
+            background: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .nav-button:hover {
+            background: #667eea;
+
+            color: white;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =================================
+           Features
+        ================================= */
+
+        .features {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 30px;
+        }
+
+
+        .feature {
+
+            background: #f7f7fb;
+
+            padding: 18px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+
+        .feature:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 5px 15px rgba(
+                    0,
+                    0,
+                    0,
+                    0.08
+                );
+        }
+
+
+        .feature-icon {
+
+            font-size: 25px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .feature h3 {
+
+            font-size: 15px;
+
+            margin-bottom: 5px;
+
+            color: #333;
+        }
+
+
+        .feature p {
+
+            font-size: 12px;
+
+            color: #777;
+
+            line-height: 1.5;
+        }
+
+
+        /* =================================
+           Footer
+        ================================= */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: rgba(
+                255,
+                255,
+                255,
+                0.85
+            );
+
+            font-size: 13px;
+        }
+
+
+        /* =================================
+           Responsive Design
+        ================================= */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 15px;
+
+                align-items: flex-start;
+            }
+
+
+            .container {
+                margin-top: 20px;
+            }
+
+
+            .card {
+                padding: 25px;
+            }
+
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+
+            .header p {
+                font-size: 15px;
+            }
+
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+
+            .card {
+                padding: 20px;
+            }
+
+
+            textarea {
+                min-height: 180px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =================================
+         Header
+    ================================= -->
+
+    <div class="header">
+
+        <h1>
+            📄 Resume Analyzer
+        </h1>
+
+
+        <p>
+
+            Upload your resume and compare it with a job
+            description to analyze your skills, calculate
+            your job match score, and get personalized
+            suggestions to improve your resume.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================
+         Main Card
+    ================================= -->
+
+    <div class="card">
+
+
+        <!-- =================================
+             Resume Analysis Form
+        ================================= -->
+
+        <form
+            action="/upload"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+
+            <!-- Resume Upload -->
+
+            <div class="section">
+
+                <label>
+                    Upload Your Resume
+                </label>
+
+
+                <div class="file-box">
+
+                    <input
+                        type="file"
+                        name="resume"
+                        accept=".pdf"
+                        required
+                    >
+
+
+                    <p class="file-info">
+                        📎 PDF files only
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Job Description -->
+
+            <div class="section">
+
+                <label>
+                    Job Description
+                </label>
+
+
+                <textarea
+                    name="job_description"
+                    placeholder="Paste the job description here..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- Analyze Button -->
+
+            <button
+                type="submit"
+                class="analyze-button"
+            >
+
+                🔍 Analyze Resume
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- =================================
+             History Button
+        ================================= -->
+
+        <a
+            href="/history"
+            class="nav-button"
+        >
+
+            📊 View Analysis History
+
+        </a>
+
+
+
+        <!-- =================================
+             Dashboard Button
+        ================================= -->
+
+        <a
+            href="/dashboard"
+            class="nav-button"
+        >
+
+            📈 Open Dashboard
+
+        </a>
+
+
+
+        <!-- =================================
+             Features
+        ================================= -->
+
+        <div class="features">
+
+
+            <!-- Resume Analysis -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📑
+                </div>
+
+
+                <h3>
+                    Resume Analysis
+                </h3>
+
+
+                <p>
+
+                    Extract skills and contact
+                    information from your resume.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- NLP Matching -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🧠
+                </div>
+
+
+                <h3>
+                    NLP Matching
+                </h3>
+
+
+                <p>
+
+                    Compare your resume with the job
+                    using NLP techniques.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- Smart Suggestions -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💡
+                </div>
+
+
+                <h3>
+                    Smart Suggestions
+                </h3>
+
+
+                <p>
+
+                    Get suggestions to improve your
+                    resume for the selected job.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         Footer
+    ================================= -->
+
+    <div class="footer">
+
+        Resume Analyzer • Python • Flask • PostgreSQL • NLP
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
