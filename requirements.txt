@@ -2,4 +2,6 @@ Flask
 pypdf
 psycopg2-binary
 scikit-learn
-gunicorn
+gunicornpython-dotenv
+python-dotenv
+python-dotenv
